@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
-import { View, Text, Button, StyleSheet, Image } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
+import theme from './Theme'; // Tema dosyanızı import edin
 
 function HomeScreen({ navigation }) {
-  const [points, setPoints] = useState(0);
-
   return (
-    <View style={styles.container}>
+    <View style={theme.container}>
       {/* Üstteki fotoğraf */}
       <Image 
         source={require('../assets/adaptive-icon.png')} 
@@ -13,43 +12,46 @@ function HomeScreen({ navigation }) {
       />
       
       {/* Başlık */}
-      <Text style={styles.title}>KYK Puan Sistemi</Text>
+      <Text style={theme.header}>KYK Puan Sistemi</Text>
 
       {/* Butonlar */}
-      <Button
-        title="Ürünleri Görüntüle"
+      <TouchableOpacity
+        style={theme.button}
         onPress={() => navigation.navigate('Product')}
-      />
-      <Button
-        title="Ödülleri Görüntüle"
+      >
+        <Text style={theme.buttonText}>Ürünleri Görüntüle</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={theme.button}
         onPress={() => navigation.navigate('Reward')}
-      />
-      <Button
-        title="Puanları Görüntüle"
-        onPress={() => navigation.navigate('Points', { points })}
-      />
+      >
+        <Text style={theme.buttonText}>Ödülleri Görüntüle</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={theme.button}
+        onPress={() => navigation.navigate('Points', { points: 0 })}
+      >
+        <Text style={theme.buttonText}>Puanları Görüntüle</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={theme.button}
+        onPress={() => navigation.navigate('Login')}
+      >
+        <Text style={theme.buttonText}>Giriş Yap</Text>
+      </TouchableOpacity>
+     
+    
     </View>
   );
 }
 
+// Ekstra stil ayarları
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 16,
-    backgroundColor: '#ffffff', // Arka plan rengini ekleyebilirsiniz
-  },
-  title: {
-    fontSize: 30, // Başlık boyutu
-    fontWeight: 'bold', // Kalın yazı
-    marginVertical: 40, // Başlık ile butonlar arasında boşluk
-  },
   image: {
-    width: '80%', // Ekranın genişliğine uyacak şekilde
-    height: 150, // Fotoğrafın yüksekliği
-    resizeMode: 'cover', // Fotoğrafı kaplayacak şekilde
-    marginBottom: 40, // Fotoğraf ile başlık arasında boşluk
+    width: 100, // Fotoğraf genişliği
+    height: 100, // Fotoğraf yüksekliği
+    resizeMode: 'contain', // Fotoğrafın tüm alanı kaplamasını sağlar
+    marginBottom: 20, // Fotoğraf ile başlık arasındaki boşluk
   },
 });
 

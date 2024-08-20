@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { View, Text, Button } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import theme from './Theme'; // Tema dosyanızı import edin
 
 function ProductScreen({ navigation }) {
   const [points, setPoints] = useState(0);
@@ -9,14 +10,21 @@ function ProductScreen({ navigation }) {
   };
 
   return (
-    <View>
-      <Text>Ürünler</Text>
-      <Button title="Ürün Satın Al" onPress={buyProduct} />
-      <Text>Puanlarım: {points}</Text>
-      <Button
-        title="Ödüle Git"
+    <View style={theme.container}>
+      <Text style={theme.header}>Ürünler</Text>
+      <TouchableOpacity 
+        style={theme.button}
+        onPress={buyProduct}
+      >
+        <Text style={theme.buttonText}>Ürün Satın Al</Text>
+      </TouchableOpacity>
+      <Text style={theme.points}>Puanlarım: {points}</Text>
+      <TouchableOpacity 
+        style={theme.button}
         onPress={() => navigation.navigate('Reward', { points })}
-      />
+      >
+        <Text style={theme.buttonText}>Ödüle Git</Text>
+      </TouchableOpacity>
     </View>
   );
 }

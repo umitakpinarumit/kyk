@@ -1,31 +1,60 @@
-// RewardScreen.js
-import React from 'react';
-import { View, Text, Button } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Button, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import theme from './Theme'; // Tema dosyanızı import edin
 
 function RewardScreen({ route, navigation }) {
-  const { points } = route.params || {}; // params nesnesinin mevcut olup olmadığını kontrol edin
+  const [enteredCode, setEnteredCode] = useState('');
+  const [currentPoints, setCurrentPoints] = useState(route.params?.points || 0);
+
+  const rewardCodes = {
+    'CODE123': 50,
+    'SAVE20': 20,
+    'BONUS100': 100,
+  };
 
   const claimReward = (requiredPoints) => {
-    if (points >= requiredPoints) {
-      alert('Reward claimed!');
+    if (currentPoints >= requiredPoints) {
+      alert('Ödül kazanıldı!');
     } else {
-      alert('Not enough points.');
+      alert('Yeterli puan yok.');
     }
   };
 
-  if (points === undefined) {
-    return (
-      <View>
-        <Text>Error: Points data is missing.</Text>
-      </View>
-    );
-  }
+  const applyCode = () => {
+    if (rewardCodes[enteredCode]) {
+      const addedPoints = rewardCodes[enteredCode];
+      setCurrentPoints(currentPoints + addedPoints);
+      alert(`${enteredCode} kodu başarıyla uygulandı! ${addedPoints} puan eklendi.`);
+    } else {
+      alert('Geçersiz kod.');
+    }
+    setEnteredCode(''); // Kod girme alanını temizle
+  };
 
   return (
-    <View>
-      <Text>Ödüller</Text>
-      <Text>Toplanan Puan: {points}</Text>
-      <Button title="Ödülü Topla (40 Puan)" onPress={() => claimReward(40)} />
+    <View style={theme.container}>
+      <Text style={theme.header}>Ödüller</Text>
+      <Text style={theme.points}>Toplanan Puan: {currentPoints}</Text>
+
+      <TouchableOpacity 
+        style={theme.button}
+        onPress={() => claimReward(40)}
+      >
+        <Text style={theme.buttonText}>Ödülü Topla (40 Puan)</Text>
+      </TouchableOpacity>
+
+      <TextInput
+        style={theme.input}
+        placeholder="Kodunuzu girin"
+        value={enteredCode}
+        onChangeText={setEnteredCode}
+      />
+      <TouchableOpacity 
+        style={theme.button}
+        onPress={applyCode}
+      >
+        <Text style={theme.buttonText}>Kodu Uygula</Text>
+      </TouchableOpacity>
     </View>
   );
 }
