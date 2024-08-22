@@ -8,7 +8,7 @@ function PointsScreen({ route }) {
   return (
     <View style={theme.container}>
       <Text style={theme.header}>Puanlarım</Text>
-      <Text style={theme.points}>Toplam Puan: {points}</Text>
+      <Text style={styles.points}>Toplam Puan: {points}</Text>
     </View>
   );
 }
