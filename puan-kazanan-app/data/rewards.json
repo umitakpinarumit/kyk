@@ -1,0 +1,18 @@
+[
+    {
+      "rewardId": "urun123",
+      "name": "Ürün A",
+      "requiredPoints": 40
+    },
+    {
+      "rewardId": "urun456",
+      "name": "Ürün B",
+      "requiredPoints": 60
+    },
+    {
+      "rewardId": "urun789",
+      "name": "Ürün C",
+      "requiredPoints": 100
+    }
+  ]
+  

@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity } from 'react-native';
 import theme from './Theme'; // Tema dosyanızı import edin
+import users from '../data/users.json'; // Kullanıcı verilerini import edin
 
 function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
-    // Burada giriş işlemini gerçekleştirebilirsiniz
-    if (email === 'admin@example.com' && password === 'password123') {
+    const user = users.find(u => u.email === email && u.password === password);
+    if (user) {
       alert('Giriş başarılı!');
-      navigation.navigate('Reward', { points: 100 }); // Örnek olarak puanları gönderiyoruz
+      navigation.navigate('Home', { userId: user.userId, points: user.points });
     } else {
       alert('Geçersiz e-posta veya şifre.');
     }

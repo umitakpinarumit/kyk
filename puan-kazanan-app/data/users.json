@@ -1,0 +1,19 @@
+[
+    {
+      "userId": "bayi123",
+      "email": "bayi",
+      "password": "123123",
+      "points": 100,
+      "redeemedCodes": ["CODE123"],
+      "rewards": ["Ürün A", "Ürün B"]
+    },
+    {
+      "userId": "bayi456",
+      "email": "bayi2@example.com",
+      "password": "hashed_password",
+      "points": 200,
+      "redeemedCodes": ["SAVE20"],
+      "rewards": ["Ürün C"]
+    }
+  ]
+  

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
-import theme from './Theme'; // Tema dosyanızı import edin
+import theme from './Theme';
 
-function ProductScreen({ navigation }) {
-  const [points, setPoints] = useState(0);
+function ProductScreen({ navigation, route }) {
+  const [points, setPoints] = useState(route.params?.points || 0);
 
   const buyProduct = () => {
     setPoints(points + 4); // Her ürün için 4 puan eklenir.
@@ -18,7 +18,7 @@ function ProductScreen({ navigation }) {
       >
         <Text style={theme.buttonText}>Ürün Satın Al</Text>
       </TouchableOpacity>
-      <Text style={theme.points}>Puanlarım: {points}</Text>
+      <Text style={styles.points}>Puanlarım: {points}</Text>
       <TouchableOpacity 
         style={theme.button}
         onPress={() => navigation.navigate('Reward', { points })}
@@ -28,5 +28,13 @@ function ProductScreen({ navigation }) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  points: {
+    fontSize: 18,
+    marginTop: 10,
+    color: theme.textPrimary.color,
+  },
+});
 
 export default ProductScreen;

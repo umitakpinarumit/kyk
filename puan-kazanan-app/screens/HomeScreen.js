@@ -1,35 +1,34 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, Image, StyleSheet } from 'react-native';
-import theme from './Theme'; // Tema dosyanızı import edin
+import theme from './Theme';
 
-function HomeScreen({ navigation }) {
+function HomeScreen({ navigation, route }) {
+  const points = route.params?.points || 0;
+  const userId = route.params?.userId || 'defaultUser';
+
   return (
     <View style={theme.container}>
-      {/* Üstteki fotoğraf */}
       <Image 
         source={require('../assets/adaptive-icon.png')} 
         style={styles.image}
       />
-      
-      {/* Başlık */}
       <Text style={theme.header}>KYK Puan Sistemi</Text>
 
-      {/* Butonlar */}
       <TouchableOpacity
         style={theme.button}
-        onPress={() => navigation.navigate('Product')}
+        onPress={() => navigation.navigate('Product', { points })}
       >
         <Text style={theme.buttonText}>Ürünleri Görüntüle</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={theme.button}
-        onPress={() => navigation.navigate('Reward')}
+        onPress={() => navigation.navigate('Reward', { points })}
       >
         <Text style={theme.buttonText}>Ödülleri Görüntüle</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={theme.button}
-        onPress={() => navigation.navigate('Points', { points: 0 })}
+        onPress={() => navigation.navigate('Points', { points })}
       >
         <Text style={theme.buttonText}>Puanları Görüntüle</Text>
       </TouchableOpacity>
@@ -39,13 +38,10 @@ function HomeScreen({ navigation }) {
       >
         <Text style={theme.buttonText}>Giriş Yap</Text>
       </TouchableOpacity>
-     
-    
     </View>
   );
 }
 
-// Ekstra stil ayarları
 const styles = StyleSheet.create({
   image: {
     width: 100, // Fotoğraf genişliği

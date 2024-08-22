@@ -1,34 +1,32 @@
 import React, { useState } from 'react';
-import { View, Text, Button, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import theme from './Theme'; // Tema dosyanızı import edin
+import codes from '../data/codes.json'; // Kod verilerini import edin
+import rewards from '../data/rewards.json'; // Ödül verilerini import edin
 
-function RewardScreen({ route, navigation }) {
+function RewardScreen({ route }) {
   const [enteredCode, setEnteredCode] = useState('');
   const [currentPoints, setCurrentPoints] = useState(route.params?.points || 0);
 
-  const rewardCodes = {
-    'CODE123': 50,
-    'SAVE20': 20,
-    'BONUS100': 100,
+  const applyCode = () => {
+    const code = codes.find(c => c.code === enteredCode && !c.isRedeemed);
+    if (code) {
+      setCurrentPoints(currentPoints + code.points);
+      alert(`${enteredCode} kodu başarıyla uygulandı! ${code.points} puan eklendi.`);
+      code.isRedeemed = true;
+    } else {
+      alert('Geçersiz veya kullanılmış kod.');
+    }
+    setEnteredCode('');
   };
 
-  const claimReward = (requiredPoints) => {
+  const claimReward = (requiredPoints, rewardName) => {
     if (currentPoints >= requiredPoints) {
-      alert('Ödül kazanıldı!');
+      alert(`${rewardName} ödülü kazanıldı!`);
+      setCurrentPoints(currentPoints - requiredPoints);
     } else {
       alert('Yeterli puan yok.');
     }
-  };
-
-  const applyCode = () => {
-    if (rewardCodes[enteredCode]) {
-      const addedPoints = rewardCodes[enteredCode];
-      setCurrentPoints(currentPoints + addedPoints);
-      alert(`${enteredCode} kodu başarıyla uygulandı! ${addedPoints} puan eklendi.`);
-    } else {
-      alert('Geçersiz kod.');
-    }
-    setEnteredCode(''); // Kod girme alanını temizle
   };
 
   return (
@@ -36,12 +34,15 @@ function RewardScreen({ route, navigation }) {
       <Text style={theme.header}>Ödüller</Text>
       <Text style={theme.points}>Toplanan Puan: {currentPoints}</Text>
 
-      <TouchableOpacity 
-        style={theme.button}
-        onPress={() => claimReward(40)}
-      >
-        <Text style={theme.buttonText}>Ödülü Topla (40 Puan)</Text>
-      </TouchableOpacity>
+      {rewards.map(reward => (
+        <TouchableOpacity 
+          key={reward.rewardId}
+          style={theme.button}
+          onPress={() => claimReward(reward.requiredPoints, reward.name)}
+        >
+          <Text style={theme.buttonText}>{reward.name} ({reward.requiredPoints} Puan)</Text>
+        </TouchableOpacity>
+      ))}
 
       <TextInput
         style={theme.input}

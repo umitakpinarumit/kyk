@@ -1,0 +1,18 @@
+[
+    {
+      "code": "CODE123",
+      "points": 50,
+      "isRedeemed": false
+    },
+    {
+      "code": "SAVE20",
+      "points": 20,
+      "isRedeemed": true
+    },
+    {
+      "code": "BONUS100",
+      "points": 100,
+      "isRedeemed": false
+    }
+  ]
+  
